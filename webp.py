@@ -21,21 +21,45 @@ def convert_to_webp(source):
     return destination
 
 
+def convert_images(dir: str, overwrite: bool = False):
+
+    img_types = ("png", "jpg", "jpeg")
+
+    for type in img_types:
+
+        paths = Path(dir).glob("**/*.%s" % type)
+
+        for path in paths:
+
+            if overwrite == False and os.path.isfile("%s.%s" % (path, "webp")):
+                print("Image already converted: %s" % path)
+                continue
+
+            webp_path = convert_to_webp(path)
+
+            print("Converted: %s" % webp_path)
+
+
 if __name__ == "__main__":
 
     img_types = ("png", "jpg", "jpeg")
 
     if len(sys.argv) == 3 and sys.argv[1] == "--path" and os.path.isdir(sys.argv[2]):
 
-        for type in img_types:
+        convert_images(dir=sys.argv[2])
 
-            paths = Path(sys.argv[2]).glob("**/*.%s" % type)
+    elif (
+        len(sys.argv) == 4
+        and sys.argv[1] == "--path"
+        and os.path.isdir(sys.argv[2])
+        and sys.argv[3] == "--overwrite"
+    ):
 
-            for path in paths:
-                print(path)
-                webp_path = convert_to_webp(path)
-                print(webp_path)
+        convert_images(dir=sys.argv[2], overwrite=True)
 
     else:
 
         print("Usage: python3 webp.py --path [PATH TO CONVERT IMAGES TO WEBP]")
+        print(
+            "Usage: python3 webp.py --path [PATH TO CONVERT IMAGES TO WEBP] --overwrite"
+        )
