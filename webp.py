@@ -29,15 +29,19 @@ def convert_images(dir: str, overwrite: bool = False):
 
         paths = Path(dir).glob("**/*.%s" % type)
 
-        for path in paths:
+        with open("log.txt", "a+") as file_object:
 
-            if overwrite == False and os.path.isfile("%s.%s" % (path, "webp")):
-                print("Image already converted: %s" % path)
-                continue
+            for path in paths:
 
-            webp_path = convert_to_webp(path)
+                if overwrite == False and os.path.isfile("%s.%s" % (path, "webp")):
+                    print("Image already converted: %s" % path)
+                    continue
 
-            print("Converted: %s" % webp_path)
+                webp_path = convert_to_webp(path)
+
+                file_object.write(webp_path + "\n")
+
+                print("Converted: %s" % webp_path)
 
 
 if __name__ == "__main__":
