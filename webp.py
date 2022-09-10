@@ -13,7 +13,7 @@ def convert_to_webp(source):
     Returns:
         pathlib.Path: path to new image
     """
-    destination = source.with_suffix(".webp")
+    destination = "%s.%s" % (source, "webp")
 
     image = Image.open(source)  # Open image
     image.save(destination, format="webp")  # Convert image to webp
