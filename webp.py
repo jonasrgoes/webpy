@@ -37,7 +37,10 @@ def convert_images(dir: str, overwrite: bool = False):
                     print("Image already converted: %s" % path)
                     continue
 
-                webp_path = convert_to_webp(path)
+                try:
+                    webp_path = convert_to_webp(path)
+                except Exception as e:
+                    print("Unable to convert %s to webp: %s" % (path, e))
 
                 file_object.write(webp_path + "\n")
 
