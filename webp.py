@@ -34,7 +34,7 @@ def convert_images(dir: str, overwrite: bool = False):
             for path in paths:
 
                 if overwrite == False and os.path.isfile("%s.%s" % (path, "webp")):
-                    print("Image already converted: %s" % path)
+                    # print("Image already converted: %s" % path)
                     continue
 
                 try:
